@@ -36,6 +36,8 @@
                         <ul class="dropdown-menu" role="menu">
                             <li><a href="/events">Events</a></li>
                             <li><a href="/events/create">Add New Event</a></li>
+                            <li><a href="/guests">Guests</a></li>
+                            <li><a href="/guests/create">Add New Guest</a></li>
                             <li>
                                 <a href="{{ route('logout') }}"
                                     onclick="event.preventDefault();

@@ -61,8 +61,6 @@ class EventController extends Controller
         $event = Event::create($request->except('_token'));
 
         return redirect('/events/' . $event->id);
-
-        ;
     }
 
     /**

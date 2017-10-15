@@ -20,5 +20,6 @@ Auth::routes();
 Route::get('/home', 'HomeController@index')->name('home');
 
 Route::resource('/events', 'EventController');
+Route::resource('/guests', 'GuestController');
 
 Route::get('/events/{event}/invite/{guest}', 'EventController@inviteGuest');

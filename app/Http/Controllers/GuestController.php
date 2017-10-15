@@ -7,6 +7,17 @@ use Illuminate\Http\Request;
 
 class GuestController extends Controller
 {
+
+    /**
+     * Create a new controller instance.
+     *
+     * @return void
+     */
+    public function __construct()
+    {
+        $this->middleware('auth');
+    }
+
     /**
      * Display a listing of the resource.
      *
@@ -14,7 +25,9 @@ class GuestController extends Controller
      */
     public function index()
     {
-        //
+        $events = Guest::all();
+
+        return view('guests.index')->with('guests', $events);
     }
 
     /**
@@ -24,7 +37,7 @@ class GuestController extends Controller
      */
     public function create()
     {
-        //
+        return view('guests.create');
     }
 
     /**
@@ -35,7 +48,15 @@ class GuestController extends Controller
      */
     public function store(Request $request)
     {
-        //
+        $this->validate($request, [
+            'name' => 'required|string',
+            'email' => 'required|email',
+            'city' => 'string'
+        ]);
+
+        $guest = Guest::create($request->except('_token'));
+
+        return redirect('/guests/' . $guest->id);
     }
 
     /**
@@ -46,7 +67,7 @@ class GuestController extends Controller
      */
     public function show(Guest $guest)
     {
-        //
+        return view('guests.show')->with('guest', $guest);
     }
 
     /**

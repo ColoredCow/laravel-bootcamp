@@ -31,11 +31,18 @@
 				</div>
 				
 				<h3>Invited Guests</h3>
-				<ul class="list-group">
-				@foreach($event->eventGuest as $guest)
-					<li class="list-item">{{$guest->guest->name}}</li>
-				@endforeach
-				</ul>
+				<table class="table">
+				  	<tr>
+				  		<th>Name</th><th>Email</th><th>Status</th>
+				  	</tr>
+				  	@foreach($event->eventGuest as $guest)
+				    <tr>
+				    	<td><a href="/guests/{{$guest->guest->id}}">{{$guest->guest->name}}</a></td>
+				    	<td>{{$guest->guest->email}}</td>
+						<td><span class="label label-{{isset($guest->rsvp_status) ?  $guest->rsvp_status ? 'success' : 'error' : 'warning' }}">{{isset($guest->rsvp_status) ?  $guest->rsvp_status ? 'Confirmed' : 'Declined' : 'Pending' }}</span></td>
+				    </tr>
+				    @endforeach
+				</table>
 
 		  	</div>
 		  	<div class="col-xs-12 col-sm-4">
