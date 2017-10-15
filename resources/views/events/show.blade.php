@@ -39,7 +39,7 @@
 				    <tr>
 				    	<td><a href="/guests/{{$guest->guest->id}}">{{$guest->guest->name}}</a></td>
 				    	<td>{{$guest->guest->email}}</td>
-						<td><span class="label label-{{isset($guest->rsvp_status) ?  $guest->rsvp_status ? 'success' : 'error' : 'warning' }}">{{isset($guest->rsvp_status) ?  $guest->rsvp_status ? 'Confirmed' : 'Declined' : 'Pending' }}</span></td>
+						<td><span class="label label-{{isset($guest->rsvp_status) ?  $guest->rsvp_status ? 'success' : 'danger' : 'warning' }}">{{isset($guest->rsvp_status) ?  $guest->rsvp_status ? 'Confirmed' : 'Declined' : 'Pending' }}</span></td>
 				    </tr>
 				    @endforeach
 				</table>
@@ -48,7 +48,6 @@
 		  	<div class="col-xs-12 col-sm-4">
 		  		<h3>Guest List</h3>
 				<ul>
-					<li><a href="/events/{{$event->id}}/invite/all"><strong>Inivte All</strong></a></li>
 					@foreach(App\Guest::eventInvitationList($event->id); as $guest)
 						<li><a href="/events/{{$event->id}}/invite/{{$guest->id}}">{{ $guest->name }}</a></li>
 					@endforeach

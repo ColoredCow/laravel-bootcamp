@@ -5,7 +5,9 @@ namespace App\Http\Controllers;
 use App\Event;
 use App\EventGuest;
 use App\Guest;
+use App\Mail\Invitation;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Mail;
 
 class EventController extends Controller
 {
@@ -71,7 +73,6 @@ class EventController extends Controller
      */
     public function show(Event $event)
     {
-
         return view('events.show')->with('event', $event);
     }
 
@@ -109,18 +110,23 @@ class EventController extends Controller
         //
     }
 
-    public function inviteGuest($event, $guest)
+    public function inviteGuest(Event $event, Guest $guest)
     {
         if ($guest == 'all') {
-            $guests = Guest::eventInvitationList($event);
+            $guests = Guest::eventInvitationList($event->id);
             foreach ($guests as $guest) {
-                EventGuest::create(['event_id' => $event, 'guest_id' => $guest->id]);
+                EventGuest::create(['event_id' => $event->id, 'guest_id' => $guest->id]);
+
+                Mail::to($guest)->send(new Invitation($event, $guest));
             }
         } else {
-            EventGuest::create(['event_id' => $event, 'guest_id' => $guest]);
+            EventGuest::create(['event_id' => $event->id, 'guest_id' => $guest->id]);
+
+            Mail::to($guest)->send(new Invitation($event, $guest));
         }
         
+        
 
-        return redirect('/events/' . $event);
+        return redirect('/events/' . $event->id);
     }
 }
