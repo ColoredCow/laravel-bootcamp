@@ -29,6 +29,24 @@
 				  	</address>
 				  </div>
 				</div>
+				
+				<h3>Invited Guests</h3>
+				<ul class="list-group">
+				@foreach($event->eventGuest as $guest)
+					<li class="list-item">{{$guest->guest->name}}</li>
+				@endforeach
+				</ul>
+
+		  	</div>
+		  	<div class="col-xs-12 col-sm-4">
+		  		<h3>Guest List</h3>
+				<ul>
+					<li><a href="/events/{{$event->id}}/invite/all"><strong>Inivte All</strong></a></li>
+					@foreach(App\Guest::eventInvitationList($event->id); as $guest)
+						<li><a href="/events/{{$event->id}}/invite/{{$guest->id}}">{{ $guest->name }}</a></li>
+					@endforeach
+				</ul>
+
 		  	</div>
 		</div>
     </div>

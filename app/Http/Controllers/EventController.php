@@ -3,6 +3,8 @@
 namespace App\Http\Controllers;
 
 use App\Event;
+use App\EventGuest;
+use App\Guest;
 use Illuminate\Http\Request;
 
 class EventController extends Controller
@@ -60,7 +62,8 @@ class EventController extends Controller
 
         return redirect('/events/' . $event->id);
 
-;    }
+        ;
+    }
 
     /**
      * Display the specified resource.
@@ -70,6 +73,7 @@ class EventController extends Controller
      */
     public function show(Event $event)
     {
+
         return view('events.show')->with('event', $event);
     }
 
@@ -105,5 +109,20 @@ class EventController extends Controller
     public function destroy(Event $event)
     {
         //
+    }
+
+    public function inviteGuest($event, $guest)
+    {
+        if ($guest == 'all') {
+            $guests = Guest::eventInvitationList($event);
+            foreach ($guests as $guest) {
+                EventGuest::create(['event_id' => $event, 'guest_id' => $guest->id]);
+            }
+        } else {
+            EventGuest::create(['event_id' => $event, 'guest_id' => $guest]);
+        }
+        
+
+        return redirect('/events/' . $event);
     }
 }
